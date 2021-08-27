@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useDispatch, useSelector } from 'react-redux';
 import mainHeader from '../Components/mainHeader';
 import { IAppState } from '../Redux/Store';
 import { VGame } from '../models/Videogame';
+import { Modal, Portal } from 'react-native-paper';
 
 
 const MainScreen = () => {
@@ -40,12 +41,14 @@ const MainScreen = () => {
 
     const deleteGame = () =>
     {
+        console.log(selected);
         dispatch({
             type: "DELETE_GAME",
             payload: {
-                game:selected
+                gameName: selected?.gameNAME
             }
-        })
+        });
+        setModalOpen(false);
     }
     
     return (
@@ -66,6 +69,9 @@ const MainScreen = () => {
 
                             <Text style={styles.itemText}>Genra: {item.GENRA}</Text>
                             <Text style={styles.itemText}>{item.gameSYSTEM.map((sys) => sys + ', ')}</Text>
+                            {Boolean(item.Multiplayer)&&<View style={styles.Multi}>
+                                    <AntDesign name="addusergroup" size={24} color="black" />
+                            </View>}
                     </View>
                     </TouchableOpacity>
                 )}
@@ -75,19 +81,19 @@ const MainScreen = () => {
 
             </FlatList>
             </View>
-            <View style={styles.modal}>
+            <Portal>
                 <Modal
-                    animationType='fade'
-                    transparent={false}
                     visible={open}
+                    onDismiss={() => setModalOpen(false)}
+                    contentContainerStyle={styles.modal}
                     >
-                    <View style={styles.modal}>
-                        <Text>Are you sure you want to delete {selected?.gameNAME}</Text>
-                        <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity>
+                    <View >
+                        <Text style={styles.modalquestion}>Are you sure you want to delete {selected?.gameNAME}</Text>
+                        <View style={{flexDirection:'row',justifyContent:'center'}}>
+                        <TouchableOpacity style={styles.modalButton} onPress={deleteGame}>
                             <Text>Yes</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>setModalOpen(false)}>
+                        <TouchableOpacity style={styles.modalButton} onPress={()=>setModalOpen(false)}>
                             <Text>No</Text>
                         </TouchableOpacity>
 
@@ -95,7 +101,7 @@ const MainScreen = () => {
                     </View>
                 </Modal>
                     
-            </View>
+                </Portal>
         </>
     );
 }
@@ -125,10 +131,29 @@ const styles = StyleSheet.create({
         margin: '1%'
     },
     modal: {
-        flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+        margin: 22,
+        padding: '10%',
+    backgroundColor: 'white'
+    },
+    modalquestion: {
+        fontSize:18
+    },
+    modalButton: {
+        marginTop: '5%',
+        marginHorizontal: '10%',
+        backgroundColor: 'lightblue',
+        padding: '5%',
+        paddingHorizontal:'10%',
+        borderWidth: 1,
+        borderRadius:50
+    },
+    Multi: {
+        //flexDirection: 'row',
+        //position: 'absolute',
+        alignSelf: 'flex-end',
+        //marginTop: '25%'
     }
 });
 

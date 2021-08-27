@@ -104,7 +104,8 @@ const AddScreen = () =>
                 <Text style={styles.multiselectLabel}> Systems </Text>
                 <MultiSelect
                     items={systems}
-                    uniqueKey="id"
+                            uniqueKey="id"
+                            fixedHeight
                     onSelectedItemsChange={setSelected}
                     selectedItems={selected}
                     selectText="Select Systems"
@@ -112,7 +113,8 @@ const AddScreen = () =>
                     onChangeInput={(text) => console.log(text)}
                     tagRemoveIconColor="black"
                     tagBorderColor="black"
-                    tagTextColor="black"
+                        tagTextColor="black"
+                        styleItemsContainer={{maxHeight:'80%'}}
                     //styleRowList={{backgroundColor:'yellow'}}
                     selectedItemTextColor="blue"
                     selectedItemIconColor="blue"
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
         //height:'100%',
         margin: '2%',
         backgroundColor:'grey',
-        justifyContent:'space-evenly'
+        //justifyContent:'space-evenly'
         
     },
     checkbox: {
@@ -177,10 +179,11 @@ const styles = StyleSheet.create({
         marginVertical:'2%'
     },
     inputGroup: {
+        //flex:1,
         borderWidth: 1,
         borderRadius:10,
         padding:'1%',
-        marginVertical: '1%',
+        marginVertical: '5%',
         backgroundColor: 'lightblue'
 
     },
@@ -189,6 +192,7 @@ const styles = StyleSheet.create({
         marginVertical:'1%'
     },
     row: {
+        
         width:'100%',
         flexDirection: 'row',
         alignItems: 'center'

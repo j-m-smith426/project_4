@@ -135,7 +135,8 @@ const EditScreen = () =>
                 <Text style={styles.multiselectLabel}> Systems </Text>
                 <MultiSelect
                     items={systems}
-                    uniqueKey="id"
+                            uniqueKey="id"
+                            fixedHeight
                     onSelectedItemsChange={setSelected}
                     selectedItems={selected}
                     selectText="Select Systems"
@@ -143,7 +144,8 @@ const EditScreen = () =>
                     onChangeInput={(text) => console.log(text)}
                     tagRemoveIconColor="black"
                     tagBorderColor="black"
-                    tagTextColor="black"
+                        tagTextColor="black"
+                        styleItemsContainer={{maxHeight:'80%'}}
                     //styleRowList={{backgroundColor:'yellow'}}
                     selectedItemTextColor="blue"
                     selectedItemIconColor="blue"

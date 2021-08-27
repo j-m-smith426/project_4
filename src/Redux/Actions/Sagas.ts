@@ -12,6 +12,12 @@ function* updateVGame(action: any) {
   yield getAllGames();
 }
 
+function* deleteVGame(action: any) {
+  console.log(action.payload);
+  yield call(axios.delete, "/delete/" + action.payload.gameName);
+  yield getAllGames();
+}
+
 function* getAllGames() {
   try {
     const games = yield call(axios.get, "/");
@@ -30,6 +36,10 @@ function* retrieveGame() {
   yield takeEvery("RETRIEVE_GAME", getAGame);
 }
 
+function* deleteGame() {
+  yield takeEvery("DELETE_GAME", deleteVGame);
+}
+
 function* updateGames() {
   yield takeEvery("UPDATE_LIST", getAllGames);
 }
@@ -43,5 +53,11 @@ function* updateGame() {
 }
 
 export default function* rootSaga() {
-  yield all([updateGame(), addGame(), updateGames(), retrieveGame()]);
+  yield all([
+    updateGame(),
+    addGame(),
+    updateGames(),
+    retrieveGame(),
+    deleteGame(),
+  ]);
 }
