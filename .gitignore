@@ -8,7 +8,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-**/Axios/
 
 # macOS
 .DS_Store
+src/Axios/AxiosConfig.ts
